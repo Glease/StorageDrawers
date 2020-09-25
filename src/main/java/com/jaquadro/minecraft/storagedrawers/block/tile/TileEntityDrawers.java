@@ -63,9 +63,12 @@ public abstract class TileEntityDrawers extends ChamTileEntity implements IDrawe
 
     private class DrawerAttributes extends BasicDrawerAttributes
     {
+        private boolean init = false;
         @Override
         protected void onAttributeChanged () {
-            if (!TileEntityDrawers.this.drawerAttributes.isItemLocked(LockAttribute.LOCK_POPULATED)) {
+            if (!init) {
+                init = true;
+            } else if (!TileEntityDrawers.this.drawerAttributes.isItemLocked(LockAttribute.LOCK_POPULATED)) {
                 for (int slot = 0; slot < TileEntityDrawers.this.getGroup().getDrawerCount(); slot++) {
                     if (TileEntityDrawers.this.emptySlotCanBeCleared(slot)) {
                         IDrawer drawer = TileEntityDrawers.this.getGroup().getDrawer(slot);
